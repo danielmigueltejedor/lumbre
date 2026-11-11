@@ -1,0 +1,56 @@
+[workspace]
+resolver = "2"
+members = ["crates/*", "apps/lumbred", "apps/lumbre-desktop", "cli/lumbre-code"]
+# The desktop app needs windowing libraries on Linux; everything else builds on a bare toolchain.
+default-members = ["crates/*", "apps/lumbred", "cli/lumbre-code"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+license = "Apache-2.0"
+repository = "https://github.com/danielmigueltejedor/lumbre"
+authors = ["Nodalia contributors"]
+publish = false
+
+[workspace.dependencies]
+lumbre-resources = { path = "crates/lumbre-resources" }
+lumbre-router = { path = "crates/lumbre-router" }
+lumbre-tools = { path = "crates/lumbre-tools" }
+lumbre-models = { path = "crates/lumbre-models" }
+lumbre-runtime = { path = "crates/lumbre-runtime" }
+lumbre-core = { path = "crates/lumbre-core" }
+lumbre-api = { path = "crates/lumbre-api" }
+lumbre-code = { path = "crates/lumbre-code" }
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.9"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt", "json", "env-filter"] }
+sha2 = "0.10"
+ureq = { version = "3", default-features = false, features = ["rustls", "json"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+regex = "1"
+ignore = "0.4"
+diffy = "0.4"
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "net", "macros", "signal", "sync", "time"] }
+axum = { version = "0.8", default-features = false, features = ["http1", "json", "tokio", "query"] }
+libc = "0.2"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_debug_implementations = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+dbg_macro = "warn"
+todo = "warn"
+unwrap_used = "warn"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
