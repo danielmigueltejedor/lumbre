@@ -1,0 +1,26 @@
+# Lumbre model manifest. Sizes and SHA-256 digests are the ones Hugging Face reports for the
+# pinned revision; Lumbre refuses a download that does not match them.
+schema = 1
+id = "qwen2.5-coder-1.5b"
+name = "Qwen2.5 Coder 1.5B Instruct"
+tier = "code"
+publisher = "Alibaba Cloud (Qwen team)"
+upstream = "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct"
+source = "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF"
+revision = "f86cb2c1fa58255f8052cc32aeede1b7482d4361"
+license = "Apache-2.0"
+license_url = "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF/blob/f86cb2c1fa58255f8052cc32aeede1b7482d4361/LICENSE"
+format = "gguf"
+parameters = "1.5B"
+
+[[variant]]
+quant = "Q4_K_M"
+file = "qwen2.5-coder-1.5b-instruct-q4_k_m.gguf"
+size_bytes = 1117320768
+sha256 = "cc324af070c2ecbfd324a30884d2f951a7ff756aba85cb811a6ec436933bb046"
+
+[[variant]]
+quant = "Q8_0"
+file = "qwen2.5-coder-1.5b-instruct-q8_0.gguf"
+size_bytes = 1894532160
+sha256 = "507de59046601282ba768a9789900e6ccf60ed93ddf346730b7c68eb0715bc47"

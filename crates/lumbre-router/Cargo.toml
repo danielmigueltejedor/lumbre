@@ -1,0 +1,16 @@
+[package]
+name = "lumbre-router"
+description = "Decides, per request, the cheapest system that can answer it: a rule, a tool or a model tier."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+
+[lints]
+workspace = true

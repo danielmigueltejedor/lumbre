@@ -1,0 +1,23 @@
+[package]
+name = "lumbre-desktop"
+description = "Lumbre: the desktop assistant. A client of the local daemon, styled with the Nodalia Design Language."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "lumbre"
+path = "src/main.rs"
+
+[dependencies]
+lumbre-api.workspace = true
+lumbre-resources.workspace = true
+eframe = { version = "0.37", default-features = false, features = ["glow", "default_fonts", "wayland", "x11"] }
+# Nodalia Design Language: tokens and the egui style built from them.
+nodalia-theme = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "b44861a8ccb2db084cf9fa75deed75c3aa121644", features = ["egui"] }
+
+[lints]
+workspace = true

@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# Only takes effect if the CodeRabbit app is installed on the repository.
+language: en-US
+reviews:
+  profile: chill
+  auto_review:
+    ignore_usernames:
+      - "dependabot[bot]"
+  path_filters:
+    - "!Cargo.lock"
+    - "!assets/icons/**"

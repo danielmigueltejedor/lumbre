@@ -1,0 +1,20 @@
+[package]
+name = "lumbre-api"
+description = "The versioned local API of Lumbre: wire types, file locations, the access token and a blocking client."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+lumbre-resources.workspace = true
+lumbre-router.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+ureq.workspace = true
+
+[lints]
+workspace = true

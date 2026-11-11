@@ -1,0 +1,15 @@
+# Starts the Lumbre daemon the first time something connects to the local API.
+# Install for your user:
+#   cp lumbre.socket lumbre.service ~/.config/systemd/user/
+#   systemctl --user enable --now lumbre.socket
+[Unit]
+Description=Lumbre local API (socket)
+
+[Socket]
+ListenStream=127.0.0.1:47110
+# Never listen on anything but loopback.
+BindIPv6Only=default
+FreeBind=false
+
+[Install]
+WantedBy=sockets.target

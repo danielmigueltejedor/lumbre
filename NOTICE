@@ -1,0 +1,25 @@
+Lumbre
+Copyright 2026 Nodalia contributors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Lumbre builds on work by others. None of it is copied into this repository;
+each item is fetched at build time or installed and downloaded by the user.
+
+- llama.cpp (https://github.com/ggml-org/llama.cpp), MIT License. Lumbre runs
+  its `llama-server` program as a worker process. Not bundled in 0.1.
+- Nodalia Design Language (https://github.com/danielmigueltejedor/nodalia-design),
+  MIT License. The desktop app takes its `nodalia-theme` crate as a dependency.
+- Rust crates listed in Cargo.lock, under their own licences (checked in CI
+  with cargo-deny against the allow-list in deny.toml).
+- Model weights are not part of Lumbre. Each manifest in models/ names the
+  publisher, the upstream model card, the pinned revision and the licence of
+  the weights it points to. The built-in manifests point to Qwen models
+  published by Alibaba Cloud under the Apache License 2.0.
+
+- The application icons show Leonardo Torres Quevedo, from a 1921 autochrome
+  by Auguste Léon (Archives de la Planète, Musée départemental Albert-Kahn),
+  in the public domain. Source and processing: design/icon/SOURCE.md.
+
+"Lumbre Nano", "Mini", "Lumbre" and "Lumbre Code" are names of size classes
+(tiers), not of models trained by this project.
