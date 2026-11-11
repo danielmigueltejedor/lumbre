@@ -1,0 +1,21 @@
+[package]
+name = "lumbre-code-cli"
+description = "lumbre-code: the command-line coding agent of Lumbre."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "lumbre-code"
+path = "src/main.rs"
+
+[dependencies]
+lumbre-api.workspace = true
+lumbre-code.workspace = true
+clap.workspace = true
+
+[lints]
+workspace = true
