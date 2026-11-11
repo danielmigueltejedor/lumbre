@@ -5,7 +5,8 @@
       <img src="https://raw.githubusercontent.com/danielmigueltejedor/nodalia-web/main/assets/brand/nodalia-wordmark-black.svg" width="150" alt="Nodalia">
     </picture>
   </a>
-  <!-- The application icon goes here once it is chosen: see docs/icon.md. -->
+  <br><br>
+  <img src="assets/icons/lumbre.png" width="200" alt="Lumbre">
   <h1>Lumbre</h1>
   <p><strong>Local AI that adapts to your computer, not the other way round.</strong></p>
 
@@ -291,7 +292,8 @@ Configuration is optional; see [docs/configuration.md](docs/configuration.md).
 | Lumbre Código IDE | Plan only | [docs/code-ide.md](docs/code-ide.md) |
 | Web search, calendar, weather, document memory | Planned | — |
 | Packages and installers | Planned | — |
-| Application icon | Pending a design decision | [docs/icon.md](docs/icon.md) |
+| Application icon, Lumbre Código variant; PNG, ICO, ICNS | Done | [docs/icon.md](docs/icon.md) |
+| Lumbre's accent colour in the Nodalia Design Language | Pending (a change in `nodalia-design`) | [docs/icon.md](docs/icon.md) |
 
 ## Roadmap
 

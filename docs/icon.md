@@ -1,38 +1,70 @@
 # Icon
 
-Status: **not decided.** There is no official Lumbre icon yet, and none is referenced by the
-README or the application.
+<p>
+  <img src="../assets/icons/lumbre.png" width="160" alt="Lumbre">
+  <img src="../assets/icons/lumbre-code.png" width="160" alt="Lumbre Código">
+</p>
 
-The brief for the icon asks for an original, minimal, geometric symbol inspired by light or
-energy — no generic flames, no brains with circuits, no "AI sparkle" stars, no decorative
-gradients — with a recognisable variant for Lumbre Código.
+## Concept
 
-Every other Nodalia application, however, uses a different system: a black-and-white portrait
-of a historical figure on the application's colour (Vortia is Bernoulli, Forja is Leonardo,
-Lienzo is Velázquez). That system was chosen after abstract glyphs were rejected as forgettable.
-The two directions conflict, so the choice is the project owner's and has been put to him:
+Every Nodalia application is represented by a black-and-white portrait of someone who stands
+for what the application does, on the application's colour: Bernoulli for Vortia, Leonardo for
+Forja, Velázquez for Lienzo. Lumbre follows the family.
 
-1. **A portrait, like the family.** Candidates with a real claim on the subject and
-   public-domain likenesses: Leonardo Torres Quevedo (built *El Ajedrecista*, the first machine
-   to play a chess endgame on its own, 1912), Ramon Llull (the *Ars Magna*, mechanical
-   combination of concepts, 13th century), Gottfried Leibniz (the *calculus ratiocinator*).
-2. **A geometric symbol of its own.** Three sketches are in
-   [`design/icon-proposals`](../design/icon-proposals/lumbre-icon-options.png), each with a
-   Lumbre Código variant in which the ember becomes a cursor:
-   - **A · Hogar** — an arch with an ember inside: the hearth. "Lumbre" is the household fire,
-     and the arch is also a doorway: the thing that stays at home.
-   - **B · Ele** — the letter L holding an ember in its corner.
-   - **C · Núcleo** — an ember inside a ring that is open on one side: a core that is there on
-     demand.
+**The sitter is Leonardo Torres Quevedo** (1852–1936), the Spanish engineer who built
+*El Ajedrecista* in 1912 — a machine that played a chess endgame on its own, against a person,
+and won — and who wrote, in his 1914 *Ensayos sobre Automática*, about machines that would
+decide for themselves what to do next. A machine that reasons, built to run on its own, with
+no one behind it: that is the idea Lumbre is named for.
 
-   All use flat colours only, in two palettes: charcoal with an ember-orange accent, or an
-   ember-orange field.
+**The colour is charcoal**, the only dark field in the family, and it comes with an ember.
+*Lumbre* is the household fire — not a blaze, the glow that is kept going. So the portrait sits
+on charcoal and is lit from behind by an ember-orange glow. On a dark field the family's usual
+drop shadow would disappear and the sitter's dark suit would sink into the background; the
+glow does both jobs, and it is the name of the application drawn once.
 
-Also pending, tied to the same choice: Lumbre's accent colour in the Nodalia Design Language
-(one line in `accents.json` of `nodalia-design`). Ember orange sits very close to Pluma's
-existing accent, so the colour needs deciding together with the icon. Until then the desktop
-app uses the default Nodalia accent.
+**Lumbre Código** is the same portrait with a prompt, `›_`, on an ember tile in the lower right
+corner: recognisably the same application, at work in a terminal. The tile stays legible down to
+32 px; at 16 px it reads as an ember-coloured corner, which is still enough to tell the two
+apart in a task bar.
 
-Once chosen, the deliverables are: the editable SVG in `assets/icons/`, PNG at the standard
-sizes, ICO and ICNS, the Lumbre Código variant, the README header, and the application and
-window icons.
+An earlier direction — an abstract geometric symbol — was sketched and set aside in favour of
+the family's portraits.
+
+## Colours
+
+| | |
+| --- | --- |
+| Charcoal (field, top → bottom) | `#453B35` → `#1B1512` |
+| Ember (glow, Código tile, interface accent) | `#FF6A1F` |
+
+Lumbre's accent in the Nodalia Design Language should be derived from the ember, not from the
+charcoal: a dark neutral cannot carry selection and focus. That is one line in `accents.json` of
+`nodalia-design`, and it has **not** been made yet; until it is, the desktop app uses the
+default Nodalia accent. Ember is close to Pluma's orange (`#EE5A14`), so the two accents will
+look related in the interface even though the icons do not.
+
+## Files
+
+| File | Use |
+| --- | --- |
+| `assets/icons/lumbre.png`, `lumbre-code.png` | 1024 px master with the rounded shape and margin (Linux, Windows, documentation) |
+| `assets/icons/lumbre-fullbleed.png`, `lumbre-code-fullbleed.png` | 1024 px square, for systems that apply their own mask |
+| `assets/icons/png/<name>-{16,24,32,48,64,128,256,512}.png` | Linux icon theme sizes |
+| `assets/icons/<name>.ico` | Windows (16–256 px) |
+| `assets/icons/<name>.icns` | macOS |
+| `design/icon/` | Source photograph, mask, and the script that composes the icons |
+
+A portrait is a raster image, so there is no hand-editable SVG of the whole icon as there would
+be for a glyph. The editable source is the script: crop, tones, colours, glow strength and the
+Código mark are parameters at the top of [`design/icon/compose.py`](../design/icon/compose.py),
+and the mark itself is drawn as vector shapes there.
+
+Provenance and licence of the photograph: [`design/icon/SOURCE.md`](../design/icon/SOURCE.md).
+
+## Not done
+
+- The Linux `.desktop` entry and icon-theme installation come with packaging.
+- The macOS bundle and the Windows executable resource, likewise.
+- The icon has been reviewed at 16–400 px on light and dark backgrounds, not yet in a real
+  launcher or dock.

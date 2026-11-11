@@ -17,5 +17,9 @@ each item is fetched at build time or installed and downloaded by the user.
   the weights it points to. The built-in manifests point to Qwen models
   published by Alibaba Cloud under the Apache License 2.0.
 
+- The application icons show Leonardo Torres Quevedo, from a 1921 autochrome
+  by Auguste Léon (Archives de la Planète, Musée départemental Albert-Kahn),
+  in the public domain. Source and processing: design/icon/SOURCE.md.
+
 "Lumbre Nano", "Mini", "Lumbre" and "Lumbre Code" are names of size classes
 (tiers), not of models trained by this project.

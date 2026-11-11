@@ -18,7 +18,8 @@ is priority order.
    private protocol, so installing Lumbre is enough to run a model. Keep the process boundary.
 6. **Micro-LLM resolver**: use the Nano tier to classify the requests the keyword classifier
    abstains on, loaded only for that and only if it fits.
-7. **Icon and accent colour**, once chosen: assets, README, application icon.
+7. **Accent colour**: add Lumbre's ember accent to the Nodalia Design Language and use it in the
+   desktop app.
 8. **Packages**: Arch (PKGBUILD), Fedora (RPM), Debian/Ubuntu (deb), with the systemd units.
 9. **Desktop**: Markdown rendering, a first-run flow that proposes the model that fits the
    machine, settings for mode and memory limit, Spanish interface.

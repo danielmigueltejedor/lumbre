@@ -8,4 +8,4 @@ reviews:
       - "dependabot[bot]"
   path_filters:
     - "!Cargo.lock"
-    - "!design/icon-proposals/**"
+    - "!assets/icons/**"

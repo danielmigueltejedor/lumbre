@@ -11,21 +11,30 @@ mod worker;
 use nodalia_theme::for_egui::{apply_system, Appearance};
 use nodalia_theme::Accent;
 
+/// The application icon: Leonardo Torres Quevedo on charcoal (see docs/icon.md).
+const ICON: &[u8] = include_bytes!("../../../assets/icons/png/lumbre-256.png");
+
 fn main() -> eframe::Result {
+    let mut viewport_icon = None;
+    match eframe::icon_data::from_png_bytes(ICON) {
+        Ok(icon) => viewport_icon = Some(icon),
+        Err(error) => eprintln!("lumbre: the embedded icon could not be decoded: {error}"),
+    }
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()
             .with_title("Lumbre")
             .with_app_id("com.nodalia.Lumbre")
             .with_inner_size([1040.0, 700.0])
-            .with_min_inner_size([640.0, 420.0]),
+            .with_min_inner_size([640.0, 420.0])
+            .with_icon(viewport_icon.unwrap_or_default()),
         ..Default::default()
     };
     eframe::run_native(
         "Lumbre",
         options,
         Box::new(|creation| {
-            // Nodalia Design Language, following the system's light/dark preference. Lumbre has
-            // no accent of its own in NDL yet, so it uses the default Nodalia accent.
+            // Nodalia Design Language, following the system's light/dark preference. Lumbre's
+            // ember accent is not in NDL yet, so it uses the default Nodalia accent for now.
             apply_system(
                 &creation.egui_ctx,
                 &Appearance { accent: Accent::Nodalia, ..Appearance::default() },

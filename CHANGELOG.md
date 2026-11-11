@@ -20,5 +20,7 @@ The first foundation.
 - Desktop app base with the Nodalia Design Language: chat, history, models, privacy.
 - `lumbre-code`: overview, file, text and symbol search, diff check and apply, permissioned
   command execution, read-only git.
+- Application icon (Leonardo Torres Quevedo on charcoal) with a Lumbre Código variant, as PNG,
+  ICO and ICNS.
 - systemd socket activation units; CI with formatting, Clippy, tests on Linux and macOS, an
   idle-footprint gate, Linux probe checks and dependency licence and advisory checks.
