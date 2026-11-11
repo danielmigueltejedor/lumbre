@@ -1,0 +1,26 @@
+# The Lumbre daemon, started on demand by lumbre.socket and gone again when idle.
+[Unit]
+Description=Lumbre daemon
+Requires=lumbre.socket
+
+[Service]
+ExecStart=%h/.local/bin/lumbred --exit-on-idle 600
+Restart=on-failure
+
+# The daemon and its model worker share this cgroup, so these limits hold for both
+# whatever Lumbre's own governor decides. Adjust or remove to taste.
+MemoryHigh=75%
+MemoryMax=85%
+# Inference yields CPU to interactive applications.
+CPUWeight=50
+Nice=5
+IOSchedulingClass=idle
+
+# The daemon needs the network only to download models you ask for.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.local/share/lumbre %h/.config/lumbre
+PrivateTmp=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=yes

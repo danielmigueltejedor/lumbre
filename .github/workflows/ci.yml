@@ -1,0 +1,110 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+
+jobs:
+  lint:
+    name: Format and Clippy
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Desktop build dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev libgl1-mesa-dev
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets --locked
+
+  test:
+    name: Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-14]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      # The default members: every crate, the daemon and the CLI (no windowing libraries needed).
+      - run: cargo test --locked
+
+  desktop:
+    name: Desktop app builds (Linux)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev libgl1-mesa-dev
+      - run: cargo build --locked -p lumbre-desktop
+
+  linux-runtime:
+    name: Linux probes, idle footprint and socket activation
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Idle footprint (fails over 20 MiB)
+        run: benchmarks/idle.sh 20 | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: What the Linux probe reads on this runner
+        run: |
+          export LUMBRE_HOME="$(mktemp -d)"
+          target/release/lumbred --port 47192 2>/dev/null &
+          sleep 1
+          curl -sS -H "Authorization: Bearer $(cat "$LUMBRE_HOME/api-token")" http://127.0.0.1:47192/v1/status | tee status.json | python3 -m json.tool
+          # The runner must report real memory, PSI and a cgroup: these are the Linux-only paths.
+          python3 - <<'PY'
+          import json
+          s = json.load(open("status.json"))["snapshot"]
+          assert s["memory"]["total_bytes"] > 0 and s["memory"]["available_bytes"] > 0, s["memory"]
+          assert s["memory"]["psi"] is not None, "PSI was not read"
+          assert s["memory"]["pressure"] != "unknown", s["memory"]
+          assert s["cgroup"] is not None, "cgroup v2 memory controller was not read"
+          assert s["self_rss_bytes"] > 0
+          print("linux probe ok:", s["memory"]["pressure"], s["cgroup"])
+          PY
+          kill %1
+      - name: systemd socket activation starts the daemon on the first connection
+        run: |
+          export LUMBRE_HOME="$(mktemp -d)"
+          systemd-socket-activate -l 127.0.0.1:47193 target/release/lumbred --exit-on-idle 4 2>activation.log &
+          sleep 1
+          ! pgrep -x lumbred || { echo "the daemon started before any connection"; exit 1; }
+          target/release/lumbred --version
+          token_file="$LUMBRE_HOME/api-token"
+          # The first request creates the token (as a client would) and wakes the daemon.
+          LUMBRE_ADDR=127.0.0.1:47193 cargo run --release --quiet -p lumbre-code-cli -- status
+          pgrep -x lumbred
+          test -s "$token_file"
+          sleep 9
+          ! pgrep -x lumbred || { echo "the daemon did not exit when idle"; cat activation.log; exit 1; }
+          echo "socket activation and exit-on-idle ok"
+
+  deny:
+    name: Dependency licences and advisories
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check
+          arguments: --all-features
