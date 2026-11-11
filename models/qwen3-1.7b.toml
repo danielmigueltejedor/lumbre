@@ -1,0 +1,20 @@
+# Lumbre model manifest. Sizes and SHA-256 digests are the ones Hugging Face reports for the
+# pinned revision; Lumbre refuses a download that does not match them.
+schema = 1
+id = "qwen3-1.7b"
+name = "Qwen3 1.7B"
+tier = "mini"
+publisher = "Alibaba Cloud (Qwen team)"
+upstream = "https://huggingface.co/Qwen/Qwen3-1.7B"
+source = "https://huggingface.co/Qwen/Qwen3-1.7B-GGUF"
+revision = "90862c4b9d2787eaed51d12237eafdfe7c5f6077"
+license = "Apache-2.0"
+license_url = "https://huggingface.co/Qwen/Qwen3-1.7B-GGUF/blob/90862c4b9d2787eaed51d12237eafdfe7c5f6077/LICENSE"
+format = "gguf"
+parameters = "1.7B"
+
+[[variant]]
+quant = "Q8_0"
+file = "Qwen3-1.7B-Q8_0.gguf"
+size_bytes = 1834426016
+sha256 = "061b54daade076b5d3362dac252678d17da8c68f07560be70818cace6590cb1a"
