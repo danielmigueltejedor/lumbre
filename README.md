@@ -142,7 +142,7 @@ Lumbre does not promise zero impact; it sets measurable goals and measures them.
 | Goal | Measured | Where |
 | --- | --- | --- |
 | Idle daemon under 20 MiB resident, no model loaded | 6.9 MiB after 20 s idle, 1 thread, 0.01 s CPU | macOS on Apple Silicon, `benchmarks/idle.sh` |
-| Same, on Linux | Measured by CI on every run (`linux-runtime` job fails over 20 MiB) | Ubuntu 24.04 x86_64 runner |
+| Same, on Linux | 6.4 MiB after 20 s idle, 1 thread; re-measured by CI on every run (fails over 20 MiB) | Ubuntu 24.04 x86_64 runner |
 | A routing decision costs nothing noticeable | 755 ns average | macOS arm64, `route_bench` example |
 
 What the governor does today ([docs/resources.md](docs/resources.md) has the rules and numbers):

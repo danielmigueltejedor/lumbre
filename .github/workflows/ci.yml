@@ -86,7 +86,8 @@ jobs:
       - name: systemd socket activation starts the daemon on the first connection
         run: |
           export LUMBRE_HOME="$(mktemp -d)"
-          systemd-socket-activate -l 127.0.0.1:47193 target/release/lumbred --exit-on-idle 4 2>activation.log &
+          # systemd-socket-activate gives the service a clean environment; pass ours explicitly.
+          systemd-socket-activate -E LUMBRE_HOME -l 127.0.0.1:47193 target/release/lumbred --exit-on-idle 4 2>activation.log &
           sleep 1
           ! pgrep -x lumbred || { echo "the daemon started before any connection"; exit 1; }
           target/release/lumbred --version

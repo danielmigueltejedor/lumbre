@@ -81,12 +81,13 @@ These rules are in `Residency` and `LoadGate`, tested with scripted time and pre
 
 ## Idle cost
 
-Goal: under 20 MiB resident with no model loaded. Measured with `benchmarks/idle.sh`:
+Goal: under 20 MiB resident with no model loaded. Measured with `benchmarks/idle.sh`; the
+`linux-runtime` CI job repeats the Linux measurement on every run and fails above 20 MiB:
 
 | Platform | Resident after start | After 20 s idle | Threads | CPU time |
 | --- | --- | --- | --- | --- |
 | macOS, Apple Silicon (release build, 2026-11-11) | 6.0 MiB | 6.9 MiB | 1 | 0.01 s |
-| Linux x86_64 | measured by the `linux-runtime` CI job on every run; the job fails above 20 MiB | | | |
+| Linux x86_64, Ubuntu 24.04 CI runner (release build, 2026-11-11) | 5.5 MiB | 6.4 MiB | 1 | under 0.01 s |
 
 With systemd socket activation (`integrations/linux/systemd`) the idle cost is zero: systemd
 holds the socket, starts `lumbred` on the first connection, and `--exit-on-idle` ends it after a
