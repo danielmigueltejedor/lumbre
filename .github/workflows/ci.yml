@@ -22,11 +22,12 @@ jobs:
     name: Format and Clippy
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
         with:
+          toolchain: stable
           components: rustfmt, clippy
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
       - name: Desktop build dependencies
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev libgl1-mesa-dev
       - run: cargo fmt --all --check
@@ -40,9 +41,11 @@ jobs:
       matrix:
         os: [ubuntu-24.04, macos-15]
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
       # The default members: every crate, the daemon and the CLI (no windowing libraries needed).
       - run: cargo test --locked
 
@@ -50,9 +53,11 @@ jobs:
     name: Desktop app builds (Linux)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libxkbcommon-dev libwayland-dev libx11-dev libxcb1-dev libgl1-mesa-dev
       - run: cargo build --locked -p lumbre-desktop
 
@@ -60,14 +65,17 @@ jobs:
     name: Linux probes, idle footprint and socket activation
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
       - name: Idle footprint (fails over 20 MiB)
         run: benchmarks/idle.sh 20 | tee -a "$GITHUB_STEP_SUMMARY"
       - name: What the Linux probe reads on this runner
         run: |
-          export LUMBRE_HOME="$(mktemp -d)"
+          LUMBRE_HOME="$(mktemp -d)"
+          export LUMBRE_HOME
           target/release/lumbred --port 47192 2>/dev/null &
           sleep 1
           curl -sS -H "Authorization: Bearer $(cat "$LUMBRE_HOME/api-token")" http://127.0.0.1:47192/v1/status | tee status.json | python3 -m json.tool
@@ -85,7 +93,8 @@ jobs:
           kill %1
       - name: systemd socket activation starts the daemon on the first connection
         run: |
-          export LUMBRE_HOME="$(mktemp -d)"
+          LUMBRE_HOME="$(mktemp -d)"
+          export LUMBRE_HOME
           # systemd-socket-activate gives the service a clean environment; pass ours explicitly.
           systemd-socket-activate -E LUMBRE_HOME -l 127.0.0.1:47193 target/release/lumbred --exit-on-idle 4 2>activation.log &
           sleep 1
@@ -104,8 +113,8 @@ jobs:
     name: Dependency licences and advisories
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: EmbarkStudios/cargo-deny-action@v2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: EmbarkStudios/cargo-deny-action@3c6349835b2b7b196a839186cb8b78e02f7b5f25 # v2
         with:
           command: check
           arguments: --all-features
