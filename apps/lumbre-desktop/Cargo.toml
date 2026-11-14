@@ -17,7 +17,7 @@ lumbre-api.workspace = true
 lumbre-resources.workspace = true
 eframe = { version = "0.37", default-features = false, features = ["glow", "default_fonts", "wayland", "x11"] }
 # Nodalia Design Language: tokens and the egui style built from them.
-nodalia-theme = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "b44861a8ccb2db084cf9fa75deed75c3aa121644", features = ["egui"] }
+nodalia-theme = { git = "https://github.com/danielmigueltejedor/nodalia-design", rev = "3c51db933a04f0a74ca008e0f79c902ebf11f028", features = ["egui"] }
 
 [lints]
 workspace = true
